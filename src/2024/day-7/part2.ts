@@ -30,7 +30,6 @@ const canAchieveResult = (result: number, numbers: number[], index: number, curr
   return canAchieveResult(result, numbers, newIndex, current + numbers[index]) ||
     canAchieveResult(result, numbers, newIndex, current * numbers[index]) ||
     canAchieveResult(result, numbers, newIndex, parseInt(current + '' + numbers[index]));
-
 }
 
 const getFileContent = (): string[] => {

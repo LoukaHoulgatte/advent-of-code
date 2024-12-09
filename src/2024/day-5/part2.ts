@@ -10,15 +10,39 @@ const main = () => {
 
   const cases = splitByType[1].split('\n')
 
+  const wronglyOrdered: number[][] = []
+
   const result = cases.reduce((sum, currentCase) => {
     const parsedCase = currentCase.split(',').map(item => parseInt(item))
     if(parsedCase.length === 1) return sum
     if (validCase(parsedCase, computedInstructions)) {
       sum+= parsedCase[Math.floor(parsedCase.length / 2)]
+    } else {
+      wronglyOrdered.push(parsedCase)
     }
     return sum
   }, 0)
   console.log(result)
+  const result2 = wronglyOrdered.reduce((sum, currentCase) => {
+    const updatedCase = reorderCase(currentCase, computedInstructions)
+    sum+= updatedCase[Math.floor(updatedCase.length / 2)]
+    return sum
+  },0)
+  console.log(result2)
+}
+
+const reorderCase = (currentCase: number[], instructions: Instructions) => {
+  return currentCase.sort((a, b) => {
+    const { before: beforeA = [], after: afterA = [] } = instructions[a] ?? {}
+    const { before: beforeB = [], after: afterB = [] } = instructions[b] ?? {}
+
+    if (beforeA.includes(b)) return 1
+    if (afterA.includes(b)) return -1
+    if (beforeB.includes(a)) return -1
+    if (afterB.includes(a)) return 1
+
+    return 0
+  })
 }
 
 const computeInstructions = (instructions: string[]) => {
