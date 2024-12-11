@@ -14,6 +14,9 @@
 [Problem](https://adventofcode.com/2024/day/5)
 - [Part One](./day-5/part1.ts)
 - [Part Two](./day-5/part2.ts)
+## Day 6
+[Problem](https://adventofcode.com/2024/day/6)
+- [Part One](./day-6/part1.ts)
 ## Day 7
 [Problem](https://adventofcode.com/2024/day/7)
 - [Part One](./day-7/part1.ts)
