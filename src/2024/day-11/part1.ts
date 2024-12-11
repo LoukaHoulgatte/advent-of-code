@@ -11,8 +11,6 @@ const main = () => {
 }
 
 const processNumbers = (numbers: string[]) => {
-
-
   return numbers.flatMap(num => {
     if(num === '0') return '1'
     if(num.length %2 === 0) {
