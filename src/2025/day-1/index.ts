@@ -6,20 +6,22 @@ const main = () => {
   const result = getFileContent().reduce((count, instruction) => {
     const match = instruction.trim().match(/^(?<direction>[A-Z])(?<distance>\d+)$/);
 
-    if( match === null) return count
+    if (match === null) return count
 
     const { direction, distance } = match.groups!;
-    console.log({ direction, distance: parseInt(distance) % 100, initialDistance: distance, position });
 
-    const aroundTheClock = Math.floor(parseInt(distance) / 100)
+    const parsedDistance = parseInt(distance)
+    console.log({ direction, distance: parsedDistance % 100, position });
+
+    const aroundTheClock = Math.floor(parsedDistance / 100)
 
     if (direction === "L") {
-      position = position - (parseInt(distance) % 100)
+      position = position - (parsedDistance % 100)
       if (position < 0) {
         position = position + 100
       }
     } else {
-      position = position + (parseInt(distance) % 100)
+      position = position + (parsedDistance % 100)
       if (position > 99) {
         position = position - 100
       }
