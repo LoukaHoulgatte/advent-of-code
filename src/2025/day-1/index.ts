@@ -3,33 +3,32 @@ import fs from "node:fs";
 const main = () => {
   let position = 50
 
-  const result = getFileContent().reduce((count, instruction) => {
+  const result = getFileContent().reduce((numberOfZeros, instruction) => {
     const match = instruction.trim().match(/^(?<direction>[A-Z])(?<distance>\d+)$/);
 
-    if (match === null) return count
+    if (match === null) return numberOfZeros
 
     const { direction, distance } = match.groups!;
 
     const parsedDistance = parseInt(distance)
-    console.log({ direction, distance: parsedDistance % 100, position });
 
-    const aroundTheClock = Math.floor(parsedDistance / 100)
+    let passingZeros = 0
 
     if (direction === "L") {
-      position = position - (parsedDistance % 100)
-      if (position < 0) {
-        position = position + 100
+      if (position === 0) {
+        passingZeros = Math.floor(parsedDistance / 100)
+      } else if (parsedDistance >= position) {
+        passingZeros = 1 + Math.floor((parsedDistance - position) / 100)
       }
-    } else {
-      position = position + (parsedDistance % 100)
-      if (position > 99) {
-        position = position - 100
-      }
+      position = ((position - parsedDistance) % 100 + 100) % 100
     }
 
-    if (position === 0) return count + 1 + aroundTheClock
+    if (direction === "R") {
+      passingZeros = Math.floor((position + parsedDistance) / 100)
+      position = (position + parsedDistance) % 100
+    }
 
-    return count + aroundTheClock
+    return numberOfZeros + passingZeros
   }, 0)
 
   console.log({result})
